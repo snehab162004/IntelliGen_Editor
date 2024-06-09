@@ -6,7 +6,7 @@ import { CODE_SNIPPETS } from "../constants";
 import Output from "./Output";
 import { executeCode } from "../api";
 import SearchText from "./SearchText";
-import { generateCode } from "./CodeGen";  // Correct import
+import { generateCode } from "./CodeGen"; 
 
 const CodeEditor = () => {
   const editorRef = useRef();

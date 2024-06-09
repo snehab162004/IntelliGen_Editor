@@ -17,7 +17,7 @@ const SearchText = () => {
         {
           method: "POST",
           headers: {
-            Authorization: "Bearer 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",
+            Authorization: "Bearer",
             "Content-Type": "application/json",
           },
           body: JSON.stringify({

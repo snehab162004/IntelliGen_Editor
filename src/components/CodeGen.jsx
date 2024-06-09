@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = "https://api-inference.huggingface.co/models/bigcode/starcoder2-15b";
-const headers = { "Authorization": "Bearer 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" };
+const headers = { "Authorization": "Bearer" };
 
 export const generateCode = async (payload) => {
   try {
