@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "https://api-inference.huggingface.co/models/bigcode/starcoder2-15b";
+const API_URL = "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1";
 const headers = { "Authorization": "Bearer" };
 
 export const generateCode = async (payload) => {
@@ -15,4 +15,5 @@ export const generateCode = async (payload) => {
     console.error("Error querying the API:", error);
     throw error;
   }
+  
 };

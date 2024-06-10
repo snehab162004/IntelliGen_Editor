@@ -3,8 +3,9 @@ import { Box, Text } from "@chakra-ui/react";
 const Output = ({ output, isError }) => {
   return (
     <Box
-      height="70vh"
-      p={2}
+      height="78vh"
+      p={5}
+      mt={28}
       color={isError ? "red.400" : ""}
       border="1px solid"
       borderRadius={4}

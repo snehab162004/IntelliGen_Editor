@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import { Box, Flex, HStack, VStack, Button, useToast, Input, Textarea } from "@chakra-ui/react";
 import { Editor } from "@monaco-editor/react";
+import { useNavigate } from "react-router-dom"; 
 import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "../constants";
 import Output from "./Output";
 import { executeCode } from "../api";
 import SearchText from "./SearchText";
-import { generateCode } from "./CodeGen"; 
 
 const CodeEditor = () => {
   const editorRef = useRef();
@@ -16,8 +16,8 @@ const CodeEditor = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [theme, setTheme] = useState("vs-dark");
-  const [generatedCode, setGeneratedCode] = useState("");
   const toast = useToast();
+  const navigate = useNavigate();
 
   const onMount = (editor) => {
     editorRef.current = editor;
@@ -81,47 +81,34 @@ const CodeEditor = () => {
     }
   };
 
-  const generateAIcode = async () => {
-    try {
-      setIsLoading(true);
-      const result = await generateCode({
-        inputs: "Write a program to check if something is palindrome",
-      });
-      setGeneratedCode(result);
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: "An error occurred.",
-        description: error.message || "Unable to generate code",
-        status: "error",
-        duration: 6000,
-      });
-    } finally {
-      setIsLoading(false);
-    }
+  const navigateToCodeGen = () => {
+    navigate("/codegen");
   };
 
   return (
     <Box>
-      <HStack spacing={4} align="flex-start">
+      <HStack spacing={6} align="flex-start">
         <Box w="50%">
           <Flex justify="space-between" mb={2}>
             <LanguageSelector language={language} onSelect={onSelect} />
-            <HStack spacing={4}>
-              <Button variant="solid" colorScheme="blue" onClick={toggleTheme}>
+            <HStack spacing={6}>
+              <Button ml={5} variant="solid" colorScheme="blue" onClick={toggleTheme}>
                 Toggle Theme
               </Button>
               <Button variant="solid" colorScheme="green" isLoading={isLoading} onClick={runCode}>
                 Run Code
               </Button>
-              <Button variant="solid" colorScheme="teal" isLoading={isLoading} onClick={generateAIcode}>
+              <Button variant="solid" colorScheme="teal" onClick={navigateToCodeGen}>
                 Generate Code
               </Button>
+              <Box w="35%">
+                <Input type="file" onChange={handleFileUpload} mt={4} accept=".js,.ts,.py,.java,.cs,.php" />
+              </Box>
             </HStack>
           </Flex>
           <Editor
             options={{ minimap: { enabled: false } }}
-            height="80vh"
+            height="78vh"
             theme={theme}
             language={language}
             defaultValue={CODE_SNIPPETS[language]}
@@ -129,22 +116,14 @@ const CodeEditor = () => {
             value={value}
             onChange={(value) => setValue(value)}
           />
-          <Input type="file" onChange={handleFileUpload} mt={4} accept=".js,.ts,.py,.java,.cs,.php" />
         </Box>
+      
         <Box w="25%">
-          <Output editorRef={editorRef} language={language} output={output} isError={isError} />
+          <Output editorRef={editorRef} language={language} output={output} 
+          isError={isError} />
         </Box>
         <Box w="25%">
           <SearchText />
-          <VStack mt={4} spacing={4}>
-            <Textarea
-              value={generatedCode}
-              onChange={(e) => setGeneratedCode(e.target.value)}
-              placeholder="Generated code will appear here"
-              size="sm"
-              height="50vh"
-            />
-          </VStack>
         </Box>
       </HStack>
     </Box>

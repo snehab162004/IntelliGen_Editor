@@ -49,10 +49,11 @@ const SearchText = () => {
       height="80vh"
       width="100%"
       p={4}
+      mt={20}
       border="1px solid #ccc"
       borderRadius="8px"
-      backgroundColor="#333333"  // Set background to dark grey
-      color="#FFFFFF"  // Set text color to white for better contrast
+      backgroundColor="#333333"  
+      color="#FFFFFF"  
     >
       <VStack spacing={4} overflowY="auto" flex="1">
         <h2>Chat History</h2>
@@ -71,8 +72,8 @@ const SearchText = () => {
           placeholder="Type your question..."
           flex="1"
           mr={2}
-          backgroundColor="#555555"  // Set input background to a lighter dark grey
-          color="#FFFFFF"  // Set input text color to white
+          backgroundColor="#555555"  
+          color="#FFFFFF" 
         />
         <Button onClick={getPrediction} disabled={loading || !input} colorScheme="blue">
           {loading ? "Loading..." : "Send"}
